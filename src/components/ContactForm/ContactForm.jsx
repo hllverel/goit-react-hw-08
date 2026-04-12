@@ -4,13 +4,14 @@ import css from './ContactForm.module.css'
 import { nanoid } from 'nanoid'
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contactsOps';
+import { fetchContacts } from '../../redux/contactsOps';
 
 const FeedbackSchema = Yup.object().shape({
     name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
     number: Yup.string().matches(/^[0-9-]+$/, "Only numbers and hyphens allowed").min(3, "Too Short!").max(50, "Too Long!").required("Required") //fix
 });
 
-export default function ContactForm({onAdd}) {
+export default function ContactForm() {
     const dispatch = useDispatch();
 
     const nameFieldId = nanoid();
@@ -18,10 +19,12 @@ export default function ContactForm({onAdd}) {
     
     const handleSubmit = (values, actions) => {
         dispatch(addContact({
-            id: nanoid(),
             name: values.name,
             number: values.number,
         }))
+        .then(() => {
+            dispatch(fetchContacts())
+        })
         actions.resetForm();
     };
 
