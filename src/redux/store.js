@@ -3,6 +3,7 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import {contactsReducer} from './contacts/slice';
 import { filtersReducer } from './filters/slice';
 import { authReducer } from "./auth/slice";
+import storage from 'redux-persist/lib/storage';
 
 const authPersistConfig = {
   key: 'auth',
