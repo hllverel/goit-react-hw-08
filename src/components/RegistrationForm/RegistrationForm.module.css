@@ -1,0 +1,21 @@
+.RegistrationForm {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.RegistrationForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.RegistrationForm button {
+  width: 100px;
+  height: 30px;
+  align-self: center;
+}
