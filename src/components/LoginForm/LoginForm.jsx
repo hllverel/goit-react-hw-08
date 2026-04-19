@@ -1,10 +1,14 @@
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useId } from "react";
 import css from './LoginForm.module.css'
 
 export default function LoginForm() {
     const dispatch = useDispatch();
+
+    const emailFieldId = useId();
+    const passwordFieldId = useId();
 
     const handleSubmit = (values, actions) => {
         dispatch(login({
