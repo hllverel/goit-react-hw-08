@@ -2,13 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { register, login, logout, refreshUser } from "./operations";
 
 const slice = createSlice({
-    user: {
-        name: null,
-        email: null,
+    name: 'auth',
+    initialState: {
+        user: {
+            name: null,
+            email: null,
+        },
+        token: null,
+        isLoggedIn: false,
+        isRefreshing: false,
     },
-    token: null,
-    isLoggedIn: false,
-    isRefreshing: false,
     extraReducers: builder => {
         builder
             .addCase(register.fulfilled, (state, action) => {
