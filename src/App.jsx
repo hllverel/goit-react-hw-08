@@ -3,9 +3,9 @@ import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refreshUser } from "./redux/auth/operations";
-import { AppBar } from './components/AppBar/AppBar';
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { RestrictedRoute } from "./components/RestrictedRoute/RestrictedRoute";
+import Layout from "./components/Layout/Layout";
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const RegistrationPage = lazy(() => import('./pages/RegistrationPage/RegistrationPage'));
@@ -26,9 +26,8 @@ function App() {
     <strong>Refreshing user...</strong>
   ) : (
     <div className="App">
-      <AppBar/>
-
       <Suspense fallback={<div>Loading...</div>}>
+      <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RestrictedRoute redirectTo="/contacts" component={<RegistrationPage/>}/>} />
@@ -39,7 +38,8 @@ function App() {
             <Route path="reviews" element={<MovieReviews />} />
           </Route>
           <Route path="*" element={<NotFound />} /> */}
-        </Routes>
+          </Routes>
+        </Layout>
       </Suspense>
     </div>
 
