@@ -1,0 +1,10 @@
+.loginpage {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.title {
+  margin: 25px 0 0 0;
+}

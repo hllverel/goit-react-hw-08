@@ -1,12 +1,27 @@
 import css from './Contact.module.css'
 import { useDispatch } from "react-redux";
+import toast from 'react-hot-toast';
 import { deleteContact } from '../../redux/contacts/operations';
 
 
 const Contact = ({ contact }) => {
     const { name, number } = contact;
     const dispatch = useDispatch();
-    const handleDelete = () => dispatch(deleteContact(contact.id));
+
+    const handleDelete = () => {
+        dispatch(deleteContact(contact.id))
+            .unwrap()
+            .then(() => {
+                toast.success("Contact successfully deleted!", {
+                    position: "top-left"
+                });
+            })
+            .catch((error) => {
+                toast.error(error || "Failed to delete contact!", {
+                    position: "top-left"
+                })
+            })
+    };
 
     return (
         <div className={css.contactcard}>

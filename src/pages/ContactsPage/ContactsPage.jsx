@@ -5,6 +5,7 @@ import ContactList from '../../components/ContactList/ContactList'
 import SearchBox from '../../components/SearchBox/SearchBox';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import { fetchContacts } from '../../redux/contacts/operations';
+import css from './ContactsPage.module.css';
 
 
 export default function ContactsPage() {
@@ -15,12 +16,12 @@ export default function ContactsPage() {
     useEffect(() => { dispatch(fetchContacts()) }, [dispatch]);
 
     return (
-        <div className='contactspage'>
-          <h1>Phonebook</h1>
-          <ContactForm />
-          <SearchBox />
-          {isLoading && !error && <b>Loading contacts...</b>}
-          <ContactList />
+        <div className={css.contactspage}>
+            <h2 className={css.title}>Phonebook</h2>
+            <ContactForm />
+            <SearchBox />
+            {isLoading && !error && <b>Loading contacts...</b>}
+            <ContactList />
         </div>
     )
 }

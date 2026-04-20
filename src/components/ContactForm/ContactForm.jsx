@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import css from './ContactForm.module.css'
 import { nanoid } from 'nanoid'
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 import { addContact, fetchContacts } from '../../redux/contacts/operations';
 
 const FeedbackSchema = Yup.object().shape({
@@ -21,10 +22,19 @@ export default function ContactForm() {
             name: values.name,
             number: values.number,
         }))
-        .then(() => {
-            dispatch(fetchContacts())
-        })
-        actions.resetForm();
+            .unwrap()
+            .then(() => {
+                toast.success("Contact successfully added!", {
+                    position: "top-left"
+                });
+                dispatch(fetchContacts());
+                actions.resetForm();
+            })
+            .catch((error) => {
+                toast.error(error || "Failed to add contact!", {
+                    position: "top-left"
+                })
+            })
     };
 
     return (

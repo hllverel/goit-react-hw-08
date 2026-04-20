@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { Toaster } from 'react-hot-toast';
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refreshUser } from "./redux/auth/operations";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
@@ -17,9 +18,6 @@ function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  // const isLoading = useSelector(selectIsLoading);
-  // const error = useSelector(selectError);
-
   useEffect(() => {dispatch(refreshUser())}, [dispatch])
 
   return isRefreshing ? (
@@ -27,29 +25,17 @@ function App() {
   ) : (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RestrictedRoute redirectTo="/contacts" component={<RegistrationPage/>}/>} />
-          <Route path="/login" element={<RestrictedRoute redirectTo="/contacts" component={<LoginPage/>}/>} />
-          <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<ContactsPage/>}/>} />
-          {/* <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Route>
-          <Route path="*" element={<NotFound />} /> */}
+        <Toaster />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<RestrictedRoute redirectTo="/contacts" component={<RegistrationPage/>}/>} />
+            <Route path="/login" element={<RestrictedRoute redirectTo="/contacts" component={<LoginPage/>}/>} />
+            <Route path="/contacts" element={<PrivateRoute redirectTo="/login" component={<ContactsPage/>}/>} />
           </Routes>
         </Layout>
       </Suspense>
     </div>
-
-    // <div className='phonebook'>
-    //   <h1>Phonebook</h1>
-    //   <ContactForm />
-    //   <SearchBox />
-    //   {isLoading && !error && <b>Loading contacts...</b>}
-    //   <ContactList />
-    // </div>
   )
 }
 
